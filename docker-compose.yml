@@ -1,22 +1,18 @@
 
-version: "3"
+version: '3'
+
 
 services:
-  local_registry:
-    image: registry:latest
-    container_name: "local_registry"
-    restart: always
-    volumes:
-      - "./local_data/:/var/lib/registry/docker/registry/"
-      - "./local_config/simple.yml:/etc/docker/registry/config.yml"
-    ports:
-      - 9999:5000
+  hello-world:
+    image: hello-world
     networks:
-        registry_local:
-          ipv4_address: 172.19.0.14
-
+      admin_web:
+        ipv4_address: 172.19.0.2
 
 networks:
-  registry_local:
-    external:
-      name: docker_admin_web
+  admin_web:
+    # This will be used by administrative
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.0.0/24
